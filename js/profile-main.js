@@ -6,6 +6,39 @@ import { init as initWeather } from './weather.js';
 import { init as initClouds } from './clouds.js';
 import { init as initRain } from './rain.js';
 
+/*
+ * Profile page entry point.
+ *
+ * Owner: Bongani Sibanda
+ * Degree: Software Engineering @ UNSW
+ * Born: 14 May 2006
+ * Uni start: 2025
+ * Interests: Basketball - LA Lakers fan (LeBron James era)
+ */
+
+const BIRTH_DATE = new Date('2006-05-14');
+const UNI_START_YEAR = 2025;
+
+/* Calculate age in whole years from a birth date. */
+function calcAge(birthDate) {
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const hasHadBirthdayThisYear =
+    today.getMonth() > birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
+
+  if (!hasHadBirthdayThisYear) age -= 1;
+  return age;
+}
+
+/* Calculate the current university year label. */
+function calcUniYear(startYear) {
+  const yearsIn = new Date().getFullYear() - startYear + 1;
+  const suffixes = ['th', 'st', 'nd', 'rd'];
+  const suffix = yearsIn <= 3 ? suffixes[yearsIn] : 'th';
+  return `${yearsIn}${suffix}`;
+}
+
 const COURSES = [
   { code: 'COMP1511', name: 'Programming Fundamentals' },
   { code: 'COMP1521', name: 'Computer Systems Fundamentals' },
@@ -45,6 +78,27 @@ const PROJECTS = [
     tech: ['Node.js', 'Express', 'REST'],
   },
 ];
+
+/* Write the live bio and tagline values into the profile page. */
+function renderBio() {
+  const bioEl = document.getElementById('aboutBio');
+  const uniYearEl = document.getElementById('uniYearLabel');
+  const uniStartEl = document.getElementById('uniStartLabel');
+
+  const age = calcAge(BIRTH_DATE);
+  const uniYear = calcUniYear(UNI_START_YEAR);
+
+  if (uniYearEl) uniYearEl.textContent = uniYear;
+  if (uniStartEl) uniStartEl.textContent = UNI_START_YEAR;
+
+  if (bioEl) {
+    bioEl.textContent =
+      `Hey, I'm Bongani - a ${uniYear}-year Software Engineering student at UNSW ` +
+      `(started ${UNI_START_YEAR}), currently ${age} years old and loving every bit ` +
+      `of the degree so far. I'm passionate about building things that actually work ` +
+      `and look great doing it.`;
+  }
+}
 
 /* Render the course cards into the profile grid. */
 function renderCourses() {
@@ -97,6 +151,7 @@ function boot() {
   startClock(() => {});
   renderCourses();
   renderProjects();
+  renderBio();
 }
 
 document.addEventListener('DOMContentLoaded', boot);
