@@ -26,9 +26,7 @@ export function getPhase(hour) {
   if (hour < 14) return 'noon';
   if (hour < 17) return 'afternoon';
   if (hour < 18) return 'golden';
-  if (hour < 19) return 'sunset';
-  if (hour < 20) return 'dusk';
-  if (hour < 21) return 'twilight';
+  // Night should start at 18:00 (6 PM) — anything from 18:00 onwards is night.
   return 'night';
 }
 

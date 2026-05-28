@@ -159,7 +159,7 @@ function initWAM() {
     { message: 'Cross-referencing UNSW records…', delay: 1000 },
     { message: 'Verifying basketball knowledge…', delay: 1400 },
     { message: 'Deliberating…', delay: 2000 },
-    { message: 'Admission decision: ACCEPTED ✓', delay: 800, final: true },
+    { message: 'Admission decision: ACCEPTED', delay: 800, final: true },
   ];
 
   const stateHeadings = {
