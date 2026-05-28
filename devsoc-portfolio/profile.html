@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bongani Sibanda — Profile</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/sky.css">
+  <link rel="stylesheet" href="css/weather.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+<body>
+  <div id="skyBackground">
+    <div id="sunBody" class="celestial sun">
+      <div class="celestial-glow sun-glow"></div>
+      <div class="celestial-body sun-body"></div>
+    </div>
+    <div id="moonBody" class="celestial moon">
+      <div class="celestial-glow moon-glow"></div>
+      <div class="celestial-body moon-body"></div>
+    </div>
+    <canvas id="starCanvas"></canvas>
+    <div id="cloudContainer"></div>
+    <div id="rainContainer"></div>
+    <div id="stormOverlay"></div>
+    <div id="fogOverlay"></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-brand">BS</div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="profile.html" class="nav-link active">Profile</a></li>
+    </ul>
+  </nav>
+
+  <main class="page-content profile-page">
+    <section class="profile-hero">
+      <div class="profile-avatar">BS</div>
+      <div class="profile-intro">
+        <h1 class="profile-name">Bongani Sibanda</h1>
+        <p class="profile-tagline">Computer Science @ UNSW · DevSoc Trainee Applicant</p>
+      </div>
+    </section>
+
+    <section class="profile-section" id="coursesSection">
+      <h2 class="section-title">Courses Completed</h2>
+      <div class="course-grid" id="courseGrid"></div>
+    </section>
+
+    <section class="profile-section" id="projectsSection">
+      <h2 class="section-title">Projects</h2>
+      <div class="project-grid" id="projectGrid"></div>
+    </section>
+  </main>
+
+  <script type="module" src="js/profile-main.js"></script>
+</body>
+</html>

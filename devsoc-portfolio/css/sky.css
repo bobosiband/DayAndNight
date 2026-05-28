@@ -1,0 +1,98 @@
+#skyBackground {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  transition: background 8s ease;
+  will-change: background;
+}
+
+#starCanvas,
+#cloudContainer,
+#rainContainer,
+#stormOverlay,
+#fogOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+#starCanvas {
+  z-index: 0;
+}
+
+#cloudContainer {
+  z-index: 1;
+}
+
+#sunBody,
+#moonBody {
+  z-index: 2;
+}
+
+#rainContainer {
+  z-index: 4;
+}
+
+#stormOverlay {
+  z-index: 5;
+}
+
+#fogOverlay {
+  z-index: 6;
+}
+
+.page-content {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 1.5rem 3rem;
+}
+
+.celestial {
+  position: absolute;
+  bottom: 0;
+  transition: opacity 2s ease, bottom 1s ease, left 1s linear;
+  pointer-events: none;
+}
+
+.celestial-body {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.celestial-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(18px);
+}
+
+.sun-body {
+  background: radial-gradient(circle at 40% 40%, #fff8d0, var(--sun-color));
+  box-shadow: 0 0 40px 20px var(--sun-glow), 0 0 80px 40px rgba(255, 200, 60, 0.15);
+}
+
+.moon-body {
+  background: radial-gradient(circle at 35% 35%, #ffffff, var(--moon-color));
+  box-shadow: 0 0 30px 15px var(--moon-glow);
+}
+
+.sun-glow {
+  inset: -30px;
+  background: radial-gradient(circle, rgba(255, 220, 80, 0.4), transparent 70%);
+}
+
+.moon-glow {
+  inset: -20px;
+  background: radial-gradient(circle, rgba(200, 220, 255, 0.3), transparent 70%);
+}
+
+body[data-night='true'] {
+  color: var(--text-night);
+}

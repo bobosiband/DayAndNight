@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --sky-midnight-top: #020510;
+  --sky-midnight-bot: #0a0e2a;
+  --sky-predawn-top: #0d1b3e;
+  --sky-predawn-bot: #1a1040;
+  --sky-dawn-top: #1a1a5e;
+  --sky-dawn-bot: #c17a3a;
+  --sky-sunrise-top: #f4a44b;
+  --sky-sunrise-bot: #f7e07a;
+  --sky-morning-top: #4ab0e8;
+  --sky-morning-bot: #b8e0f7;
+  --sky-noon-top: #1c90d8;
+  --sky-noon-bot: #a8d8f0;
+  --sky-afternoon-top: #2196d8;
+  --sky-afternoon-bot: #87ceeb;
+  --sky-golden-top: #f0a040;
+  --sky-golden-bot: #f7d07a;
+  --sky-sunset-top: #e8502a;
+  --sky-sunset-bot: #f0a060;
+  --sky-dusk-top: #3a1060;
+  --sky-dusk-bot: #c04080;
+  --sky-twilight-top: #1a0830;
+  --sky-twilight-bot: #4a1060;
+  --sky-night-top: #050818;
+  --sky-night-bot: #0f1530;
+  --sun-color: #ffe066;
+  --sun-glow: rgba(255, 200, 60, 0.4);
+  --moon-color: #e8e8d8;
+  --moon-glow: rgba(200, 210, 230, 0.25);
+  --text-day: #0a1a2a;
+  --text-night: #e8eaf6;
+  --text-glow: rgba(255, 255, 255, 0.15);
+  --glass-day: rgba(255, 255, 255, 0.18);
+  --glass-night: rgba(10, 20, 60, 0.45);
+  --border-day: rgba(255, 255, 255, 0.4);
+  --border-night: rgba(100, 120, 200, 0.3);
+  --rain-color: rgba(140, 170, 210, 0.6);
+  --fog-color: rgba(200, 210, 220, 0.35);
+  --storm-overlay: rgba(20, 20, 40, 0.45);
+  --page-bg: #050818;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100vh;
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--page-bg);
+  color: var(--text-day);
+}
+
+button,
+select,
+input {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+body[data-night='true'] {
+  color: var(--text-night);
+}

@@ -1,0 +1,96 @@
+.clock-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem 3rem;
+  border: 1px solid var(--border-day);
+  border-radius: 1.5rem;
+  background: var(--glass-day);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  transition: background 1.5s ease, border-color 1.5s ease;
+}
+
+.clock-time {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(2.8rem, 8vw, 6rem);
+  letter-spacing: 0.06em;
+  color: var(--text-day);
+  text-shadow: 0 2px 16px var(--text-glow);
+  transition: color 1.5s ease;
+}
+
+.clock-date {
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-day);
+  opacity: 0.75;
+  transition: color 1.5s ease;
+}
+
+.timezone-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.tz-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.tz-select {
+  min-width: 220px;
+  margin-top: 0.15rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--border-day);
+  border-radius: 0.6rem;
+  background: var(--glass-day);
+  color: var(--text-day);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.weather-badge {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-day);
+  border-radius: 2rem;
+  background: var(--glass-day);
+  backdrop-filter: blur(10px);
+  font-size: 0.85rem;
+  color: var(--text-day);
+  transition: background 1.5s ease, border-color 1.5s ease, color 1.5s ease;
+}
+
+body[data-night='true'] .clock-widget,
+body[data-night='true'] .weather-badge {
+  background: var(--glass-night);
+  border-color: var(--border-night);
+}
+
+body[data-night='true'] .clock-time,
+body[data-night='true'] .clock-date,
+body[data-night='true'] .tz-select,
+body[data-night='true'] .weather-badge,
+body[data-night='true'] .tz-label {
+  color: var(--text-night);
+}
+
+body[data-night='true'] .tz-select {
+  background: var(--glass-night);
+  border-color: var(--border-night);
+}

@@ -1,0 +1,77 @@
+@keyframes cloudDrift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(100vw + 400px));
+  }
+}
+
+@keyframes fall {
+  from {
+    top: -20px;
+    opacity: 1;
+  }
+  to {
+    top: 105vh;
+    opacity: 0.4;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sunPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 40px 20px var(--sun-glow), 0 0 80px 40px rgba(255, 200, 60, 0.12);
+  }
+  50% {
+    box-shadow: 0 0 60px 30px var(--sun-glow), 0 0 100px 60px rgba(255, 200, 60, 0.18);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes digitFlip {
+  0% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.85);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes cardLift {
+  from {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  to {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.18);
+  }
+}
+
+.sun-body {
+  animation: sunPulse 4s ease-in-out infinite;
+}

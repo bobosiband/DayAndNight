@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bongani Sibanda — Day & Night</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/sky.css">
+  <link rel="stylesheet" href="css/weather.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/clock.css">
+</head>
+<body>
+  <div id="skyBackground">
+    <div id="sunBody" class="celestial sun">
+      <div class="celestial-glow sun-glow"></div>
+      <div class="celestial-body sun-body"></div>
+    </div>
+    <div id="moonBody" class="celestial moon">
+      <div class="celestial-glow moon-glow"></div>
+      <div class="celestial-body moon-body"></div>
+    </div>
+    <canvas id="starCanvas"></canvas>
+    <div id="cloudContainer"></div>
+    <div id="rainContainer"></div>
+    <div id="stormOverlay"></div>
+    <div id="fogOverlay"></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-brand">BS</div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link active">Home</a></li>
+      <li><a href="profile.html" class="nav-link">Profile</a></li>
+    </ul>
+  </nav>
+
+  <div class="weather-badge" id="weatherBadge" aria-live="polite">
+    <span id="weatherIcon">☀️</span>
+    <span id="weatherLabel">Clear</span>
+  </div>
+
+  <main class="page-content">
+    <div class="clock-widget" id="clockWidget">
+      <div class="clock-time" id="clockTime">00:00:00 AM</div>
+      <div class="clock-date" id="clockDate">—</div>
+      <div class="timezone-selector">
+        <label for="tzSelect" class="tz-label">Timezone</label>
+        <select id="tzSelect" class="tz-select"></select>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

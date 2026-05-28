@@ -1,0 +1,62 @@
+#cloudContainer,
+#rainContainer {
+  overflow: hidden;
+}
+
+.cloud {
+  position: absolute;
+  left: -350px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 60%, #e8eaf0 0%, rgba(240, 243, 248, 0.6) 100%);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.cloud::before,
+.cloud::after {
+  content: '';
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+
+.cloud::before {
+  width: 55%;
+  height: 110%;
+  top: -40%;
+  left: 15%;
+}
+
+.cloud::after {
+  width: 38%;
+  height: 90%;
+  top: -25%;
+  right: 18%;
+}
+
+.raindrop {
+  position: absolute;
+  top: -20px;
+  width: 1.5px;
+  background: linear-gradient(to bottom, transparent, var(--rain-color));
+  border-radius: 2px;
+  animation: fall linear infinite;
+}
+
+.storm-drop {
+  width: 2px;
+  opacity: 0.9;
+  transform: rotate(-15deg);
+}
+
+#stormOverlay {
+  background: var(--storm-overlay);
+  opacity: 0;
+  transition: opacity 3s ease;
+}
+
+#fogOverlay {
+  background: var(--fog-color);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 4s ease;
+}

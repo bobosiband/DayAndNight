@@ -1,0 +1,203 @@
+.profile-page {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  animation: fadeIn 0.7s ease both;
+}
+
+.profile-hero {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3.5rem;
+}
+
+.profile-avatar {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  border: 2px solid var(--border-day);
+  border-radius: 50%;
+  background: var(--glass-day);
+  backdrop-filter: blur(10px);
+  font-family: 'Space Mono', monospace;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-day);
+  transition: background 1.5s ease, border-color 1.5s ease, color 1.5s ease;
+}
+
+.profile-name {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--text-day);
+  transition: color 1.5s ease;
+}
+
+.profile-tagline {
+  margin-top: 0.3rem;
+  font-size: 0.95rem;
+  color: var(--text-day);
+  opacity: 0.65;
+  transition: color 1.5s ease;
+}
+
+.profile-section {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  margin-bottom: 1.2rem;
+  color: var(--text-day);
+  font-family: 'Space Mono', monospace;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  transition: color 1.5s ease;
+}
+
+.course-grid,
+.project-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.course-grid {
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.project-grid {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.course-card,
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border-day);
+  border-radius: 1rem;
+  background: var(--glass-day);
+  backdrop-filter: blur(12px);
+  animation: fadeIn 0.6s ease both;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 1.5s ease, border-color 1.5s ease;
+}
+
+.course-card:hover,
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.15);
+}
+
+.course-code,
+.project-name {
+  font-family: 'Space Mono', monospace;
+  color: var(--text-day);
+  transition: color 1.5s ease;
+}
+
+.course-code {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.course-name,
+.project-desc {
+  color: var(--text-day);
+  transition: color 1.5s ease;
+}
+
+.course-name,
+.project-desc {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.project-name {
+  font-size: 1rem;
+}
+
+.project-desc {
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.tech-badge {
+  padding: 0.2rem 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 2rem;
+  background: rgba(255, 255, 255, 0.2);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-day);
+  transition: background 1.5s ease, border-color 1.5s ease, color 1.5s ease;
+}
+
+.project-link {
+  margin-top: auto;
+  color: var(--text-day);
+  font-size: 0.82rem;
+  font-weight: 600;
+  opacity: 0.8;
+  text-decoration: none;
+  transition: opacity 0.2s ease, color 1.5s ease;
+}
+
+.project-link:hover:not(.disabled) {
+  opacity: 1;
+}
+
+.project-link.disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+body[data-night='true'] .profile-avatar,
+body[data-night='true'] .course-card,
+body[data-night='true'] .project-card {
+  background: var(--glass-night);
+  border-color: var(--border-night);
+}
+
+body[data-night='true'] .profile-avatar,
+body[data-night='true'] .profile-name,
+body[data-night='true'] .profile-tagline,
+body[data-night='true'] .section-title,
+body[data-night='true'] .course-code,
+body[data-night='true'] .course-name,
+body[data-night='true'] .project-name,
+body[data-night='true'] .project-desc,
+body[data-night='true'] .project-link,
+body[data-night='true'] .tech-badge {
+  color: var(--text-night);
+}
+
+body[data-night='true'] .tech-badge {
+  background: rgba(100, 120, 220, 0.2);
+  border-color: rgba(100, 120, 220, 0.3);
+}
+
+@media (max-width: 600px) {
+  .profile-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .course-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+}
