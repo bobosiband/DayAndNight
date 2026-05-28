@@ -77,6 +77,12 @@ const PROJECTS = [
     url: 'https://seng-2021-goose-patrol.vercel.app',
     tech: ['Node.js', 'Express', 'REST', 'Vercel', 'Aws Lambda', 'DynamoDB'],
   },
+  {
+    name: 'Monday Night Sports',
+    description: 'Manages college sports at UNSW',
+    url: null,
+    tech: ['in progress but should be done before T3 starts'],
+  },
 ];
 
 /* Write the live bio and tagline values into the profile page. */
