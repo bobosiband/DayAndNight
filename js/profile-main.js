@@ -140,6 +140,345 @@ function renderProjects() {
   });
 }
 
+/*
+ * WAM modal state machine.
+ * The modal moves through three states: idle, verifying, and reveal.
+ * CSS handles the fade/slide transitions between state panels, while JS
+ * controls focus, the timed verification sequence, and the typewriter reveal.
+ */
+function initWAM() {
+  const revealMessages = [
+    "You really thought I'd leak my WAM?",
+    "My WAM is between 0 and 100. That's all you're getting.",
+  ];
+
+  const verificationSteps = [
+    { message: 'Reviewing application…', delay: 1200 },
+    { message: 'Assessing potential…', delay: 900 },
+    { message: 'Consulting academic authorities…', delay: 1800 },
+    { message: 'Cross-referencing UNSW records…', delay: 1000 },
+    { message: 'Verifying basketball knowledge…', delay: 1400 },
+    { message: 'Deliberating…', delay: 2000 },
+    { message: 'Admission decision: ACCEPTED ✓', delay: 800, final: true },
+  ];
+
+  const stateHeadings = {
+    idle: 'Access Request',
+    verifying: 'Verification in Progress',
+    reveal: 'Application Accepted',
+  };
+
+  const stateAnnouncements = {
+    idle: 'Access Request ready.',
+    verifying: 'Verification sequence started.',
+    reveal: 'Application accepted.',
+  };
+
+  const modal = document.getElementById('wamModal');
+  const openButton = document.getElementById('wamOpenButton');
+  const primaryAction = document.getElementById('wamPrimaryAction');
+  const heading = document.getElementById('wamModalHeading');
+  const liveRegion = document.getElementById('wamModalLive');
+  const stepList = document.getElementById('wamStepList');
+  const revealMessage = document.getElementById('wamRevealMessage');
+  const closeControls = modal ? modal.querySelectorAll('[data-wam-close]') : [];
+  const focusableSelector = [
+    'button:not([disabled])',
+    '[href]',
+    'input:not([disabled])',
+    'select:not([disabled])',
+    'textarea:not([disabled])',
+    '[tabindex]:not([tabindex="-1"])',
+  ].join(', ');
+
+  if (!modal || !openButton || !primaryAction || !heading || !liveRegion || !stepList || !revealMessage) {
+    return;
+  }
+
+  let state = 'idle';
+  let closeTimerId = null;
+  let typewriterTimerId = null;
+  let activeTimers = [];
+  let lastFocusedElement = null;
+  let revealText = revealMessages[Math.floor(Math.random() * revealMessages.length)];
+
+  /* Build the verification list once, then reset classes between runs. */
+  stepList.innerHTML = verificationSteps
+    .map((step, index) => {
+      const stepClass = step.final ? 'wam-step-item wam-step-item--final' : 'wam-step-item';
+      return `
+        <li class="${stepClass}" data-step-index="${index}">
+          <span class="wam-step-icon" aria-hidden="true"></span>
+          <span class="wam-step-text">${step.message}</span>
+        </li>
+      `;
+    })
+    .join('');
+
+  const stepItems = Array.from(stepList.querySelectorAll('.wam-step-item'));
+
+  /* Clear all outstanding timers so a closed modal cannot keep advancing. */
+  function clearTimers() {
+    activeTimers.forEach((timerId) => window.clearTimeout(timerId));
+    activeTimers = [];
+  }
+
+  /* Stop the reveal typewriter so the next open starts cleanly. */
+  function stopTypewriter() {
+    if (typewriterTimerId) {
+      window.clearInterval(typewriterTimerId);
+      typewriterTimerId = null;
+    }
+    revealMessage.classList.remove('is-typing');
+  }
+
+  /* Announce modal state changes to assistive tech. */
+  function announce(message) {
+    liveRegion.textContent = message;
+  }
+
+  /* Keep the panel heading and footer button aligned with the active state. */
+  function syncControls(nextState) {
+    heading.textContent = stateHeadings[nextState];
+
+    if (nextState === 'idle') {
+      primaryAction.textContent = 'Accept Me Into the Training Program';
+      primaryAction.className = 'wam-button wam-button--primary wam-button--cta';
+      primaryAction.disabled = false;
+      closeControls.forEach((control) => {
+        if (control instanceof HTMLButtonElement) {
+          control.disabled = false;
+        }
+      });
+      return;
+    }
+
+    if (nextState === 'verifying') {
+      primaryAction.textContent = 'Verifying…';
+      primaryAction.className = 'wam-button wam-button--secondary';
+      primaryAction.disabled = true;
+      closeControls.forEach((control) => {
+        if (control instanceof HTMLButtonElement) {
+          control.disabled = true;
+        }
+      });
+      return;
+    }
+
+    primaryAction.textContent = 'Close';
+    primaryAction.className = 'wam-button wam-button--secondary';
+    primaryAction.disabled = false;
+    closeControls.forEach((control) => {
+      if (control instanceof HTMLButtonElement) {
+        control.disabled = false;
+      }
+    });
+  }
+
+  /* Reset the step list so the verification flow always starts from the top. */
+  function resetVerificationSteps() {
+    stepItems.forEach((item) => {
+      item.classList.remove('is-visible', 'is-done');
+      const icon = item.querySelector('.wam-step-icon');
+      if (icon) {
+        icon.classList.remove('is-spinning', 'is-done');
+        icon.textContent = '';
+      }
+    });
+  }
+
+  /* Switch the modal state and keep the live region in sync. */
+  function setState(nextState) {
+    state = nextState;
+    modal.classList.remove('is-idle', 'is-verifying', 'is-reveal');
+    modal.classList.add(`is-${nextState}`);
+    syncControls(nextState);
+    announce(stateAnnouncements[nextState]);
+  }
+
+  /* Type the sarcastic reveal message character by character. */
+  function startTypewriter(text) {
+    stopTypewriter();
+    revealMessage.textContent = '';
+    revealMessage.classList.add('is-typing');
+
+    let index = 0;
+    typewriterTimerId = window.setInterval(() => {
+      revealMessage.textContent += text[index];
+      index += 1;
+
+      if (index >= text.length) {
+        stopTypewriter();
+      }
+    }, 28);
+  }
+
+  /* Move from the verification flow into the final punchline screen. */
+  function enterRevealState() {
+    clearTimers();
+    setState('reveal');
+    startTypewriter(revealText);
+  }
+
+  /* Drive the timed verification steps with realistic pauses. */
+  function runVerificationSequence() {
+    clearTimers();
+    resetVerificationSteps();
+
+    let elapsed = 0;
+
+    verificationSteps.forEach((step, index) => {
+      const item = stepItems[index];
+      if (!item) return;
+
+      const startTimerId = window.setTimeout(() => {
+        const icon = item.querySelector('.wam-step-icon');
+        item.classList.add('is-visible');
+        if (icon) {
+          icon.classList.add('is-spinning');
+          icon.textContent = '';
+        }
+        announce(step.message);
+
+        const finishTimerId = window.setTimeout(() => {
+          item.classList.add('is-done');
+          item.classList.remove('is-visible');
+          if (icon) {
+            icon.classList.remove('is-spinning');
+            icon.classList.add('is-done');
+            icon.textContent = '✓';
+          }
+
+          if (step.final) {
+            const revealTimerId = window.setTimeout(() => {
+              enterRevealState();
+            }, 800);
+            activeTimers.push(revealTimerId);
+          }
+        }, step.delay);
+
+        activeTimers.push(finishTimerId);
+      }, elapsed);
+
+      activeTimers.push(startTimerId);
+      elapsed += step.delay;
+    });
+  }
+
+  /* Open the modal in its idle state. */
+  function openModal() {
+    if (modal.classList.contains('is-open')) return;
+
+    if (closeTimerId) {
+      window.clearTimeout(closeTimerId);
+      closeTimerId = null;
+    }
+
+    clearTimers();
+    stopTypewriter();
+    revealText = revealMessages[Math.floor(Math.random() * revealMessages.length)];
+    lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : openButton;
+
+    modal.classList.remove('is-closing');
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    setState('idle');
+    resetVerificationSteps();
+    revealMessage.textContent = '';
+
+    window.setTimeout(() => {
+      primaryAction.focus();
+    }, 0);
+  }
+
+  /* Close the modal unless the verification flow is still running. */
+  function closeModal() {
+    if (!modal.classList.contains('is-open') || state === 'verifying') return;
+
+    clearTimers();
+    stopTypewriter();
+    const activeElement = document.activeElement;
+    if (activeElement instanceof HTMLElement && modal.contains(activeElement)) {
+      activeElement.blur();
+    }
+    modal.classList.remove('is-open');
+    modal.classList.add('is-closing');
+    modal.setAttribute('aria-hidden', 'true');
+
+    closeTimerId = window.setTimeout(() => {
+      modal.classList.remove('is-closing', 'is-idle', 'is-verifying', 'is-reveal');
+      setState('idle');
+      resetVerificationSteps();
+      revealMessage.textContent = '';
+      if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+        lastFocusedElement.focus();
+      }
+    }, 220);
+  }
+
+  /* Trap focus inside the modal while it is visible. */
+  function trapFocus(event) {
+    const focusableElements = Array.from(modal.querySelectorAll(focusableSelector)).filter((element) => {
+      return element instanceof HTMLElement && !element.hasAttribute('disabled') && element.offsetParent !== null;
+    });
+
+    if (!focusableElements.length) return;
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+    const activeElement = document.activeElement;
+
+    if (event.shiftKey && activeElement === firstElement) {
+      event.preventDefault();
+      lastElement.focus();
+      return;
+    }
+
+    if (!event.shiftKey && activeElement === lastElement) {
+      event.preventDefault();
+      firstElement.focus();
+    }
+  }
+
+  openButton.addEventListener('click', openModal);
+
+  primaryAction.addEventListener('click', () => {
+    if (state === 'idle') {
+      setState('verifying');
+      runVerificationSequence();
+      return;
+    }
+
+    if (state === 'reveal') {
+      closeModal();
+    }
+  });
+
+  modal.addEventListener('click', (event) => {
+    const target = event.target instanceof HTMLElement ? event.target : null;
+    if (!target || state === 'verifying' || !target.closest('[data-wam-close]')) return;
+    closeModal();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (!modal.classList.contains('is-open')) return;
+
+    if (event.key === 'Escape') {
+      if (state !== 'verifying') {
+        event.preventDefault();
+        closeModal();
+      }
+      return;
+    }
+
+    if (event.key === 'Tab') {
+      trapFocus(event);
+    }
+  });
+
+  setState('idle');
+}
+
 /* Boot the shared sky and populate the profile content. */
 function boot() {
   initSky();
@@ -152,6 +491,7 @@ function boot() {
   renderCourses();
   renderProjects();
   renderBio();
+  initWAM();
 }
 
 document.addEventListener('DOMContentLoaded', boot);

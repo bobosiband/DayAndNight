@@ -75,6 +75,22 @@
       </div>
     </section>
 
+    <section class="profile-section" id="wamSection">
+      <div class="wam-card">
+        <div class="wam-card-kicker">Weighted Average Mark</div>
+        <div class="wam-record-row">
+          <span class="wam-record-label">Current WAM</span>
+          <span class="wam-redaction-frame" aria-label="Redacted academic result">
+            <span class="wam-redaction-bar">??.???</span>
+          </span>
+        </div>
+        <p class="wam-card-subtext">All Good Children Touch Good Carbons</p>
+        <button type="button" class="wam-button wam-button--primary wam-button--full" id="wamOpenButton">
+          View WAM
+        </button>
+      </div>
+    </section>
+
     <section class="profile-section" id="coursesSection">
       <h2 class="section-title">Courses Completed</h2>
       <div class="course-grid" id="courseGrid"></div>
@@ -85,6 +101,60 @@
       <div class="project-grid" id="projectGrid"></div>
     </section>
   </main>
+
+  <div class="wam-modal" id="wamModal" aria-hidden="true">
+    <div class="wam-modal-backdrop" data-wam-close></div>
+    <div
+      class="wam-modal-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="wamModalHeading"
+      aria-describedby="wamModalLive"
+    >
+      <button type="button" class="wam-modal-close" aria-label="Close modal" data-wam-close>✕</button>
+      <h2 class="wam-modal-heading" id="wamModalHeading">Access Request</h2>
+
+      <div class="wam-modal-content">
+        <section class="wam-state wam-state--idle" data-wam-state="idle">
+          <div class="wam-stamp">CLASSIFIED</div>
+          <h3 class="wam-modal-title">Sensitive Academic Record</h3>
+          <p class="wam-modal-copy">
+            Access to this record requires authorised personnel only. As an external viewer,
+            you must complete the vetting process before this information can be declassified.
+          </p>
+          <ul class="wam-requirement-list">
+            <li class="wam-requirement-item wam-requirement-item--approved">Identity verified</li>
+            <li class="wam-requirement-item wam-requirement-item--approved">Background check cleared</li>
+            <li class="wam-requirement-item wam-requirement-item--pending">Training program admission — PENDING</li>
+          </ul>
+        </section>
+
+        <section class="wam-state wam-state--verifying" data-wam-state="verifying" aria-label="Verification in progress">
+          <h3 class="wam-modal-title">Verification in Progress</h3>
+          <ul class="wam-step-list" id="wamStepList"></ul>
+        </section>
+
+        <section class="wam-state wam-state--reveal" data-wam-state="reveal">
+          <div class="wam-reveal-avatar">
+            <img src="assets/profile.png" alt="Bongani Sibanda" class="wam-reveal-avatar-img">
+          </div>
+          <h3 class="wam-modal-title">Application Accepted</h3>
+          <div class="wam-reveal-subhead">WAM Status:</div>
+          <p class="wam-reveal-message" id="wamRevealMessage"></p>
+          <p class="wam-reveal-note">Thank you for your interest in my academic record. Your request has been logged.</p>
+        </section>
+      </div>
+
+      <div class="wam-modal-footer">
+        <button type="button" class="wam-button wam-button--primary wam-button--cta" id="wamPrimaryAction">
+          Accept Me Into the Training Program
+        </button>
+      </div>
+
+      <p class="wam-disclaimer">* By clicking, you confirm Bongani is extremely talented and definitely deserves a spot.</p>
+      <p class="wam-sr-only" id="wamModalLive" aria-live="polite" aria-atomic="true"></p>
+    </div>
+  </div>
 
   <script type="module" src="js/profile-main.js"></script>
 </body>
