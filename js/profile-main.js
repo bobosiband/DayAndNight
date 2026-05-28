@@ -57,25 +57,25 @@ const PROJECTS = [
     name: 'KinEvents',
     description: 'Event management platform for communities and families.',
     url: 'https://kinevents.vercel.app',
-    tech: ['React', 'Node.js', 'Vercel'],
+    tech: ['React', 'Node.js', 'Vercel', 'MongoDB'],
   },
   {
     name: 'FamLog',
     description: 'Family activity and memory logging application.',
     url: 'https://famlogs.vercel.app',
-    tech: ['React', 'Firebase'],
+    tech: ['React', 'Node.js', 'MongoDB', 'Vercel'],
   },
   {
     name: 'CampusPulse',
     description: 'Campus events and club discovery platform for UNSW students.',
     url: null,
-    tech: ['React', 'REST API'],
+    tech: ['React', 'Superbase', 'Vercel'],
   },
   {
     name: 'GooseAPI',
     description: 'SENG2021 Goose Patrol — RESTful API project.',
     url: 'https://seng-2021-goose-patrol.vercel.app',
-    tech: ['Node.js', 'Express', 'REST'],
+    tech: ['Node.js', 'Express', 'REST', 'Vercel', 'Aws Lambda', 'DynamoDB'],
   },
 ];
 
