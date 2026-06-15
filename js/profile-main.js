@@ -52,6 +52,12 @@ const COURSES = [
   { code: 'DESN1000', name: 'Engineering Design' },
 ];
 
+const CURRENT_COURSES = [
+  { code: 'MATH2400', name: 'Mathematics 2A' },
+  { code: 'MATH2859', name: 'Probability, Statistics & Information' },
+  { code: 'DESN2000', name: 'Engineering Design 2' },
+];
+
 const PROJECTS = [
   {
     name: 'KinEvents',
@@ -112,6 +118,20 @@ function renderCourses() {
   if (!grid) return;
 
   COURSES.forEach((course, index) => {
+    const card = document.createElement('div');
+    card.className = 'course-card';
+    card.style.animationDelay = `${index * 0.07}s`;
+    card.innerHTML = `<span class="course-code">${course.code}</span><span class="course-name">${course.name}</span>`;
+    grid.appendChild(card);
+  });
+}
+
+/* Render the currently enrolled course cards. */
+function renderCurrentCourses() {
+  const grid = document.getElementById('currentCourseGrid');
+  if (!grid) return;
+
+  CURRENT_COURSES.forEach((course, index) => {
     const card = document.createElement('div');
     card.className = 'course-card';
     card.style.animationDelay = `${index * 0.07}s`;
@@ -494,6 +514,7 @@ function boot() {
   initRain();
   initWeather();
   startClock(() => {});
+  renderCurrentCourses();
   renderCourses();
   renderProjects();
   renderBio();
