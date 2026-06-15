@@ -56,6 +56,7 @@ const CURRENT_COURSES = [
   { code: 'MATH2400', name: 'Finite Mathematics' },
   { code: 'MATH2859', name: 'Probability, Statistics & Information' },
   { code: 'DESN2000', name: 'Engineering Design 2' },
+  { code: 'LIFE2026', name: 'Surviving'},
 ];
 
 const PROJECTS = [
