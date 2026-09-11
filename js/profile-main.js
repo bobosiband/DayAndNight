@@ -50,12 +50,15 @@ const COURSES = [
   { code: 'MATH1081', name: 'Discrete Mathematics' },
   { code: 'MATH1231', name: 'Mathematics 1B' },
   { code: 'DESN1000', name: 'Engineering Design' },
-];
-
-const CURRENT_COURSES = [
   { code: 'MATH2400', name: 'Finite Mathematics' },
   { code: 'MATH2859', name: 'Probability, Statistics & Information' },
   { code: 'DESN2000', name: 'Engineering Design 2' },
+];
+
+const CURRENT_COURSES = [
+  { code: 'COMP2511', name: ''},
+  { code: 'COMP3121', name: ''},
+  { code: 'SENG2011', name: ''},
   { code: 'LIFE2026', name: 'Surviving'},
 ];
 
@@ -177,6 +180,7 @@ function initWAM() {
   const revealMessages = [
     "You really thought I'd leak my WAM?",
     "My WAM is between 0 and 100. That's all you're getting.",
+    "Wam is > 0",
   ];
 
   const verificationSteps = [
@@ -269,7 +273,7 @@ function initWAM() {
     heading.textContent = stateHeadings[nextState];
 
     if (nextState === 'idle') {
-      primaryAction.textContent = 'Accept Me Into the Training Program';
+      primaryAction.textContent = 'Make a Request';
       primaryAction.className = 'wam-button wam-button--primary wam-button--cta';
       primaryAction.disabled = false;
       closeControls.forEach((control) => {
