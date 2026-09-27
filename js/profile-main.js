@@ -56,9 +56,9 @@ const COURSES = [
 ];
 
 const CURRENT_COURSES = [
-  { code: 'COMP2511', name: ''},
-  { code: 'COMP3121', name: ''},
-  { code: 'SENG2011', name: ''},
+  { code: 'COMP2511', name: 'Software Design and Architecture'},
+  { code: 'COMP3121', name: 'Algorithm Design and Analysis'},
+  { code: 'SENG2011', name: 'WorkShop on Reasoning about Programs'},
   { code: 'LIFE2026', name: 'Surviving'},
 ];
 
